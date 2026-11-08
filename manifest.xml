@@ -5,13 +5,13 @@
            xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
            xsi:type="TaskPaneApp">
   <Id>7b0f6c1e-3a52-4d1b-9a64-2c5e8f1d0a37</Id>
-  <Version>1.1.0.0</Version>
+  <Version>1.1.1.0</Version>
   <ProviderName>Local</ProviderName>
   <DefaultLocale>vi-VN</DefaultLocale>
   <DisplayName DefaultValue="Công thức"/>
   <Description DefaultValue="Soạn công thức toán và chèn vào Word"/>
-  <IconUrl DefaultValue="https://letu9x.github.io/congthuc/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://letu9x.github.io/congthuc/icon-80.png"/>
+  <IconUrl DefaultValue="https://letu9x.github.io/congthuc/icon-32.png?v=2"/>
+  <HighResolutionIconUrl DefaultValue="https://letu9x.github.io/congthuc/icon-80.png?v=2"/>
   <SupportUrl DefaultValue="https://github.com/letu9x/congthuc"/>
   <Hosts><Host Name="Document"/></Hosts>
   <DefaultSettings><SourceLocation DefaultValue="https://letu9x.github.io/congthuc/taskpane.html"/></DefaultSettings>
@@ -54,9 +54,9 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16" DefaultValue="https://letu9x.github.io/congthuc/icon-16.png"/>
-        <bt:Image id="Icon.32" DefaultValue="https://letu9x.github.io/congthuc/icon-32.png"/>
-        <bt:Image id="Icon.80" DefaultValue="https://letu9x.github.io/congthuc/icon-80.png"/>
+        <bt:Image id="Icon.16" DefaultValue="https://letu9x.github.io/congthuc/icon-16.png?v=2"/>
+        <bt:Image id="Icon.32" DefaultValue="https://letu9x.github.io/congthuc/icon-32.png?v=2"/>
+        <bt:Image id="Icon.80" DefaultValue="https://letu9x.github.io/congthuc/icon-80.png?v=2"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Taskpane.Url" DefaultValue="https://letu9x.github.io/congthuc/taskpane.html"/>
