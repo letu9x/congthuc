@@ -9,22 +9,47 @@
 <script src="omml.js"></script>
 <style>
   body { font: 14px system-ui; margin: 12px; }
-  math-field { width: 100%; font-size: 24px; border: 1px solid #aaa; border-radius: 6px; padding: 6px; }
-  button { margin-top: 10px; padding: 8px 14px; font-size: 14px; }
+  math-field { width: 100%; box-sizing: border-box; font-size: 26px; min-height: 64px; border: 1px solid #aaa; border-radius: 6px; padding: 6px; }
+  math-field::part(menu-toggle) { display: none; }
+  #pal { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 10px; }
+  #pal button { padding: 8px 0; font-size: 16px; cursor: pointer; }
+  #ins { margin-top: 12px; width: 100%; padding: 10px; font-size: 15px; background: #2563eb; color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
   #msg { margin-top: 8px; color: #b00; }
+  small { color: #666; display: block; margin-top: 10px; }
 </style>
 </head>
 <body>
 <math-field id="mf"></math-field>
+<div id="pal"></div>
 <button id="ins">Chèn vào Word</button>
 <div id="msg"></div>
+<small>Gõ LaTeX trực tiếp (vd: \frac, \sqrt, ^, _) hoặc bấm các nút trên. Bấm biểu tượng bàn phím trong ô để mở bàn phím ký hiệu đầy đủ.</small>
 <script>
+  // [nhãn, LaTeX] — #? là ô trống cần điền, Tab để nhảy qua ô kế tiếp
+  const KEYS = [
+    ['a/b','\\frac{#?}{#?}'], ['x²','#@^{2}'], ['xⁿ','#@^{#?}'], ['xₙ','#@_{#?}'], ['x ₙᵐ','#@_{#?}^{#?}'],
+    ['√','\\sqrt{#?}'], ['ⁿ√','\\sqrt[#?]{#?}'], ['∑','\\sum_{#?}^{#?}'], ['∫','\\int_{#?}^{#?}'], ['lim','\\lim_{#?\\to #?}'],
+    ['( )','\\left(#?\\right)'], ['[ ]','\\left[#?\\right]'], ['{ }','\\left\\{#?\\right\\}'], ['| |','\\left|#?\\right|'], ['→','\\to'],
+    ['π','\\pi'], ['α','\\alpha'], ['β','\\beta'], ['θ','\\theta'], ['∞','\\infty'],
+    ['≤','\\le'], ['≥','\\ge'], ['≠','\\ne'], ['±','\\pm'], ['×','\\times'],
+    ['÷','\\div'], ['≈','\\approx'], ['∈','\\in'], ['∀','\\forall'], ['Δ','\\Delta']
+  ];
+  const mf = document.getElementById('mf');
+  const pal = document.getElementById('pal');
+  for (const [label, tex] of KEYS) {
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.onmousedown = e => e.preventDefault(); // giữ con trỏ trong ô công thức
+    b.onclick = () => mf.insert(tex, { focus: true, format: 'latex' });
+    pal.appendChild(b);
+  }
+
   Office.onReady(() => {
     document.getElementById('ins').onclick = async () => {
       const msg = document.getElementById('msg');
       msg.textContent = '';
       try {
-        const mathml = document.getElementById('mf').getValue('math-ml');
+        const mathml = mf.getValue('math-ml');
         const xml = Omml.toPackage(Omml.mathmlToOmml(mathml));
         await Word.run(async ctx => {
           ctx.document.getSelection().insertOoxml(xml, 'Replace');
